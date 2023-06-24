@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DiabetesDB</string>
+    <string name="btnAddMeal">Add New Meal</string>
 </resources>
