@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey;
 
 @Entity (tableName = "meal_table")
 public class Meal {
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    int id = 0;
     String carbType;
     float carbCount;
     float glucoseLevelStart;
