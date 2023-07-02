@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -49,7 +50,7 @@ public class AddMealActivity extends AppCompatActivity {
                     Meal meal = new Meal(carbType, carbCount, glucoseLevel, false, false);
                     insertAsyncTask.execute(meal);
                     Log.d("DATABASE", "Added new meal to db");
-                    showDialog("Meal added to database.");
+                    showToast("Meal added to database.");
                     finish();
                 }
             }
@@ -87,5 +88,12 @@ public class AddMealActivity extends AppCompatActivity {
                 }
             });
         alertDialog.show();
+    }
+
+    public void showToast(String message){
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(this,message,duration);
+        toast.show();
     }
 }
