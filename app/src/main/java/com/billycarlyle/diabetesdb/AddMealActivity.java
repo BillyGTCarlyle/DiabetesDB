@@ -1,5 +1,7 @@
 package com.billycarlyle.diabetesdb;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddMealActivity extends AppCompatActivity {
@@ -36,13 +39,19 @@ public class AddMealActivity extends AppCompatActivity {
         editCarbType.setAdapter(adapter);
         btnAdd.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                String carbType = editCarbType.getSelectedItem().toString();
-                float carbCount = Float.valueOf(editCarbCount.getText().toString());
-                float glucoseLevel = Float.valueOf(editGlucoseLevel.getText().toString());
-                InsertAsyncTask insertAsyncTask = new InsertAsyncTask();
-                Meal meal = new Meal(carbType,carbCount,glucoseLevel,false,false);
-                insertAsyncTask.execute(meal);
-                Log.d("DATABASE","Added new meal to db");
+                if(TextUtils.isEmpty(editCarbCount.getText()) || TextUtils.isEmpty(editGlucoseLevel.getText())){
+                    showDialog("Please enter at least a carb count and glucose level.");
+                }else {
+                    String carbType = editCarbType.getSelectedItem().toString();
+                    float carbCount = Float.valueOf(editCarbCount.getText().toString());
+                    float glucoseLevel = Float.valueOf(editGlucoseLevel.getText().toString());
+                    InsertAsyncTask insertAsyncTask = new InsertAsyncTask();
+                    Meal meal = new Meal(carbType, carbCount, glucoseLevel, false, false);
+                    insertAsyncTask.execute(meal);
+                    Log.d("DATABASE", "Added new meal to db");
+                    showDialog("Meal added to database.");
+                    finish();
+                }
             }
         });
         btnClose.setOnClickListener(new View.OnClickListener(){
@@ -65,5 +74,18 @@ public class AddMealActivity extends AppCompatActivity {
             MealDatabase.getDatabase(getApplicationContext()).mealDao().insert(meals[0]);
             return null;
         }
+    }
+
+    public void showDialog(String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(AddMealActivity.this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL,"Ok",
+            new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.dismiss();
+                }
+            });
+        alertDialog.show();
     }
 }
