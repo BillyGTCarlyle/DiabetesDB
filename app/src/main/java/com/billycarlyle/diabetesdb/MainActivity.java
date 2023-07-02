@@ -2,8 +2,11 @@ package com.billycarlyle.diabetesdb;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,30 +28,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //This button is for viewing the database in the future, but here I'm using it to add a test meal to the database.
+        //This button is for viewing the database in the future.
         Button btnViewDb = (Button) findViewById(R.id.btnViewDb);
         btnViewDb.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("BUTTONS","User tapped btnViewDb");
-                insertTestMeal(v);
             }
         });
+
+        createNotificationChannel();
     }
 
-    public void insertTestMeal(View v){
-        Meal meal = new Meal("White bread",20,5.6f,false,false);
-        InsertAsyncTask insertAsyncTask = new InsertAsyncTask();
-        insertAsyncTask.execute(meal);
-    }
-
-    //setting up an asynchronous task for inserting meals to the db
-    class InsertAsyncTask extends AsyncTask<Meal, Void, Void>{
-
-        @Override
-        protected Void doInBackground(Meal... meals) {
-
-            MealDatabase.getDatabase(getApplicationContext()).mealDao().insert(meals[0]);
-            return null;
+    private void createNotificationChannel(){
+        //create the notification channel
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "DB_Channel";
+            String description = "Notification channel for DiabetesDB";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("DB_Channel",name,importance);
+            channel.setDescription(description);
+            //register channel with the system
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

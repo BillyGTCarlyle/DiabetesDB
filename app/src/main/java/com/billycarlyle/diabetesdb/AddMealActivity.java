@@ -1,10 +1,17 @@
 package com.billycarlyle.diabetesdb;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -48,16 +55,29 @@ public class AddMealActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(editCarbCount.getText()) || TextUtils.isEmpty(editGlucoseLevel.getText())){
                     showDialog("Please enter at least a carb count and glucose level.");
                 }else {
+                    //setup meal variables
                     String carbType = editCarbType.getSelectedItem().toString();
                     float carbCount = Float.valueOf(editCarbCount.getText().toString());
                     float glucoseLevel = Float.valueOf(editGlucoseLevel.getText().toString());
                     boolean highFat = swHighFat.isChecked();
                     boolean exerciseDay = swExerciseDay.isChecked();
+
+                    //insert meal into database
                     InsertAsyncTask insertAsyncTask = new InsertAsyncTask();
                     Meal meal = new Meal(carbType, carbCount, glucoseLevel, highFat, exerciseDay);
                     insertAsyncTask.execute(meal);
+                    //logs and user feedback
                     Log.d("DATABASE", "Added new meal to db");
                     showToast("Meal added to database.");
+
+                    //create an alarm for the 1h glucose level
+                    alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    Intent intent = new Intent(AddMealActivity.this,NotifBroadcastReceiver.class);
+                    alarmIntent = PendingIntent.getBroadcast(AddMealActivity.this.getApplicationContext(),0,intent,0);
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,
+                            System.currentTimeMillis() +
+                                    (30 * 1000), alarmIntent);
                     finish();
                 }
             }
@@ -70,6 +90,8 @@ public class AddMealActivity extends AppCompatActivity {
         });
     }
 
+    private AlarmManager alarmManager;
+    private PendingIntent alarmIntent;
     private static final String[] CARBS = new String[]{
             "White bread", "Brown bread", "Potato", "Sweet potato", "White pasta", "Brown pasta", "Sugar"
     };
@@ -97,10 +119,10 @@ public class AddMealActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void showToast(String message){
+    public void showToast(String message) {
         int duration = Toast.LENGTH_LONG;
 
-        Toast toast = Toast.makeText(this,message,duration);
+        Toast toast = Toast.makeText(this, message, duration);
         toast.show();
     }
 }
