@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -33,6 +34,10 @@ public class AddMealActivity extends AppCompatActivity {
         EditText editCarbCount = (EditText) findViewById(R.id.editCarbCount);
         EditText editGlucoseLevel = (EditText) findViewById(R.id.editGlucoseLevel);
 
+        //setup switches
+        Switch swHighFat = (Switch) findViewById(R.id.swHighFat);
+        Switch swExerciseDay = (Switch) findViewById(R.id.swExerciseDay);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, CARBS);
         Spinner editCarbType = (Spinner) findViewById(R.id.editCarbType);
@@ -46,8 +51,10 @@ public class AddMealActivity extends AppCompatActivity {
                     String carbType = editCarbType.getSelectedItem().toString();
                     float carbCount = Float.valueOf(editCarbCount.getText().toString());
                     float glucoseLevel = Float.valueOf(editGlucoseLevel.getText().toString());
+                    boolean highFat = swHighFat.isChecked();
+                    boolean exerciseDay = swExerciseDay.isChecked();
                     InsertAsyncTask insertAsyncTask = new InsertAsyncTask();
-                    Meal meal = new Meal(carbType, carbCount, glucoseLevel, false, false);
+                    Meal meal = new Meal(carbType, carbCount, glucoseLevel, highFat, exerciseDay);
                     insertAsyncTask.execute(meal);
                     Log.d("DATABASE", "Added new meal to db");
                     showToast("Meal added to database.");
@@ -91,7 +98,7 @@ public class AddMealActivity extends AppCompatActivity {
     }
 
     public void showToast(String message){
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(this,message,duration);
         toast.show();

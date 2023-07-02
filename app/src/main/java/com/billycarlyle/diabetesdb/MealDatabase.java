@@ -38,10 +38,6 @@ public abstract class MealDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() ->{
                     MealDao dao = mealDatabase.mealDao();
                     dao.deleteAll();
-
-                    Meal meal = new Meal("White bread", 20, 5.4f,false,false);
-                    dao.insert(meal);
-                    System.out.println("Database populated.");
             });
         }
     };
