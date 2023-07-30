@@ -73,7 +73,7 @@ public class AddMealActivity extends AppCompatActivity {
                     //create an alarm for the 1h glucose level
                     alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                     Intent intent = new Intent(AddMealActivity.this,NotifBroadcastReceiver.class);
-                    alarmIntent = PendingIntent.getBroadcast(AddMealActivity.this.getApplicationContext(),0,intent,0);
+                    alarmIntent = PendingIntent.getBroadcast(AddMealActivity.this.getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
                     alarmManager.set(AlarmManager.RTC_WAKEUP,
                             System.currentTimeMillis() +

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 Log.d("BUTTONS","User tapped btnViewDb");
             }
+
         });
 
         createNotificationChannel();
@@ -52,4 +53,5 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
 }

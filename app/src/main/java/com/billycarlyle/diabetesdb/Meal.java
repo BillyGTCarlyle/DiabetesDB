@@ -22,6 +22,12 @@ public class Meal {
         this.exerciseDay = exerciseDay;
     }
 
+    public int getId(){
+        return id;
+    }
+    public void setId(int id){
+        this.id = id;
+    }
     public String getcarbType(){
         return carbType;
     }
