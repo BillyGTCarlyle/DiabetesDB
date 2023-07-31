@@ -35,6 +35,7 @@ public class NotifBroadcastReceiver extends BroadcastReceiver {
                 .setContentTitle("Update glucose level")
                 .setContentText("Please add your current glucose level to the database")
                 .setContentIntent(notifyPendingIntent)
+                .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

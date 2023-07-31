@@ -33,6 +33,7 @@ public class UpdateMealActivity extends AppCompatActivity {
                     updateAsyncTask.execute(glucoseLevel1h);
                     Log.d("DATABASE","Updated latest meal using glucose level:"+glucoseLevel1h);
                     showToast("Meal updated.");
+                    finish();
                 }
             }
         });
