@@ -25,7 +25,7 @@ After you have a certain number of meals in your database (undecided as of writi
 ## Roadmap
 - ~~Set up local database for storing user data~~
 - ~~Expand UI so users can log meals, with optional extra information~~
-- Create a notification system for postprandial blood glucose
+- ~~Create a notification system for postprandial blood glucose~~
 - Create an activity for viewing meal history
 - Implement system for bolus estimation based on past data
 - Create UI for estimating a bolus
