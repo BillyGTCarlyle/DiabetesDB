@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -21,6 +24,15 @@ public class ViewMealsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_meals);
+
+        Button btnCloseDB = (Button) findViewById(R.id.btnCloseDB);
+
+        btnCloseDB.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Log.d("BUTTONS","User tapped btnCloseDB");
+                finish();
+            }
+        });
 
         mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         RecyclerView recyclerView = findViewById(R.id.recyclerview);

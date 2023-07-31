@@ -8,16 +8,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class MealViewHolder extends RecyclerView.ViewHolder {
-    private final TextView mealItemView;
+    private final TextView mealCarbType;
+    private final TextView mealCarbCount;
 
     private MealViewHolder(@NonNull View itemView) {
         super(itemView);
-        mealItemView = itemView.findViewById(R.id.textView);
+        mealCarbType = itemView.findViewById(R.id.lblCarbTypeDB);
+        mealCarbCount = itemView.findViewById(R.id.lblCarbCountDB);
     }
 
-    public void bind(String text){
-        mealItemView.setText(text);
+    public void bind(List<String> details){
+        mealCarbType.setText(details.get(1));
+        mealCarbCount.setText(details.get(2));
     }
 
     static MealViewHolder create(ViewGroup parent){

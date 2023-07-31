@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity (tableName = "meal_table")
 public class Meal {
     @PrimaryKey(autoGenerate = true)
@@ -22,6 +25,17 @@ public class Meal {
         this.exerciseDay = exerciseDay;
     }
 
+    public List<String> getDetails(){
+        List<String> details = new ArrayList<String>();
+        details.add(Integer.toString(id));
+        details.add(carbType);
+        details.add(Float.toString(carbCount));
+        details.add(Float.toString(glucoseLevelStart));
+        details.add(Boolean.toString(withFat));
+        details.add(Boolean.toString(exerciseDay));
+        details.add(Float.toString(glucoseLevel1h));
+        return details;
+    }
     public int getId(){
         return id;
     }

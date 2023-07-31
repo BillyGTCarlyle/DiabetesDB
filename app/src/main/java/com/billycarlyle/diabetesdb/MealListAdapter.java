@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MealListAdapter extends ListAdapter<Meal,MealViewHolder> {
 
     public MealListAdapter(@NonNull DiffUtil.ItemCallback<Meal> diffCallback){
@@ -20,7 +23,7 @@ public class MealListAdapter extends ListAdapter<Meal,MealViewHolder> {
     @Override
     public void onBindViewHolder(MealViewHolder holder, int position){
         Meal current = getItem(position);
-        holder.bind(current.getcarbType());
+        holder.bind(current.getDetails());
     }
 
     static class MealDiff extends DiffUtil.ItemCallback<Meal>{
