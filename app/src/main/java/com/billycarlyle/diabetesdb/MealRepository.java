@@ -13,7 +13,7 @@ public class MealRepository {
     MealRepository(Application application){
         MealDatabase db = MealDatabase.getDatabase(application);
         mealDao = db.mealDao();
-        allMeals = mealDao.getAlphabetizedMeals();
+        allMeals = mealDao.getMealsById();
     }
 
     LiveData<List<Meal>> getAllMeals(){

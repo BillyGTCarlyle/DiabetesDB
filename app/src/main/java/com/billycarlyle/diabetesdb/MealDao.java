@@ -24,6 +24,6 @@ public interface MealDao {
     @Query("SELECT * FROM meal_table ORDER BY id DESC LIMIT 1")
     Meal getLastMeal();
 
-    @Query("SELECT * FROM meal_table ORDER BY carbType ASC")
-    LiveData<List<Meal>> getAlphabetizedMeals();
+    @Query("SELECT * FROM meal_table ORDER BY id DESC")
+    LiveData<List<Meal>> getMealsById();
 }
