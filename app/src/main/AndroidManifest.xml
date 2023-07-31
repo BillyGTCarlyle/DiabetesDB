@@ -16,6 +16,9 @@
         android:theme="@style/Theme.DiabetesDB"
         tools:targetApi="31">
         <activity
+            android:name=".ViewMealsActivity"
+            android:exported="false" />
+        <activity
             android:name=".UpdateMealActivity"
             android:exported="false" />
         <activity
@@ -27,8 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddMealActivity"></activity>
-        <receiver android:name=".NotifBroadcastReceiver"></receiver>
+        <activity android:name=".AddMealActivity" />
+
+        <receiver android:name=".NotifBroadcastReceiver" />
     </application>
 
 </manifest>

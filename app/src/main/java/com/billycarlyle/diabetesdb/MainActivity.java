@@ -1,5 +1,6 @@
 package com.billycarlyle.diabetesdb;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.NotificationChannel;
@@ -15,7 +16,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         btnViewDb.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Log.d("BUTTONS","User tapped btnViewDb");
+                Intent openViewMeals = new Intent(MainActivity.this,ViewMealsActivity.class);
+                MainActivity.this.startActivity(openViewMeals);
             }
 
         });

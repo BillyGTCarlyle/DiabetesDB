@@ -8,10 +8,16 @@ import java.util.List;
 
 public class MealRepository {
     private MealDao mealDao;
+    private LiveData<List<Meal>> allMeals;
 
     MealRepository(Application application){
         MealDatabase db = MealDatabase.getDatabase(application);
         mealDao = db.mealDao();
+        allMeals = mealDao.getAlphabetizedMeals();
+    }
+
+    LiveData<List<Meal>> getAllMeals(){
+        return allMeals;
     }
 
     void insert(Meal meal){
