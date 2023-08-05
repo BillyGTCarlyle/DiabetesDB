@@ -17,13 +17,13 @@ public interface MealDao {
     @Update()
     void update(Meal meal);
 
-    @Query("DELETE from meal_table")
+    @Query("DELETE from meal_table2")
     void deleteAll();
-    @Query("SELECT id FROM meal_table ORDER BY id DESC LIMIT 1")
+    @Query("SELECT id FROM meal_table2 ORDER BY id DESC LIMIT 1")
     int getLastId();
-    @Query("SELECT * FROM meal_table ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM meal_table2 ORDER BY id DESC LIMIT 1")
     Meal getLastMeal();
 
-    @Query("SELECT * FROM meal_table ORDER BY id DESC")
+    @Query("SELECT * FROM meal_table2 ORDER BY id DESC")
     LiveData<List<Meal>> getMealsById();
 }

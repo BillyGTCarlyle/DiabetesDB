@@ -1,13 +1,17 @@
 package com.billycarlyle.diabetesdb;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity (tableName = "meal_table")
+@Entity (tableName = "meal_table2")
 public class Meal {
     @PrimaryKey(autoGenerate = true)
     int id = 0;
@@ -17,12 +21,23 @@ public class Meal {
     float glucoseLevel1h;
     boolean withFat;
     boolean exerciseDay;
-    public Meal(String carbType, float carbCount, float glucoseLevelStart, boolean withFat, boolean exerciseDay){
+
+    float insulin;
+    @TypeConverters({TimestampConverter.class})
+    LocalDateTime dateTime;
+
+    String notes;
+
+    public Meal(String carbType, float carbCount, float glucoseLevelStart, boolean withFat, boolean exerciseDay, float insulin){
         this.carbType = carbType;
         this.carbCount = carbCount;
         this.glucoseLevelStart = glucoseLevelStart;
         this.withFat = withFat;
         this.exerciseDay = exerciseDay;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dateTime = LocalDateTime.now();
+        }
+
     }
 
     public List<String> getDetails(){
@@ -33,7 +48,9 @@ public class Meal {
         details.add(Float.toString(glucoseLevelStart));
         details.add(Boolean.toString(withFat));
         details.add(Boolean.toString(exerciseDay));
+        details.add(Float.toString(insulin));
         details.add(Float.toString(glucoseLevel1h));
+        details.add(dateTime.toString());
         return details;
     }
     public int getId(){

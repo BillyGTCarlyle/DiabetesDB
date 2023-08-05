@@ -3,15 +3,20 @@ package com.billycarlyle.diabetesdb;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.room.AutoMigration;
 import androidx.room.Database;
+import androidx.room.RenameTable;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.AutoMigrationSpec;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Meal.class}, version = 1, exportSchema = false)
+@Database(entities = {Meal.class},
+        version = 2
+        )
 public abstract class MealDatabase extends RoomDatabase {
     public abstract MealDao mealDao();
 
@@ -23,7 +28,8 @@ public abstract class MealDatabase extends RoomDatabase {
         if(mealDatabase == null){
             synchronized (MealDatabase.class){
                 if(mealDatabase == null){
-                    mealDatabase = Room.databaseBuilder(context.getApplicationContext(),MealDatabase.class,"meal_database").addCallback(sRoomDatabaseCallback).build();
+                    mealDatabase = Room.databaseBuilder(context.getApplicationContext(),MealDatabase.class,"meal_database").addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration().build();
                 }
             }
         }
@@ -41,4 +47,5 @@ public abstract class MealDatabase extends RoomDatabase {
             });
         }
     };
+
 }

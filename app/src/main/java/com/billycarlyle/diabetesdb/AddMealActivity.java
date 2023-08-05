@@ -40,6 +40,7 @@ public class AddMealActivity extends AppCompatActivity {
         //setup text variables
         EditText editCarbCount = (EditText) findViewById(R.id.editCarbCount);
         EditText editGlucoseLevel = (EditText) findViewById(R.id.editGlucoseLevel);
+        EditText editInsulin = (EditText) findViewById(R.id.editInsulin);
 
         //setup switches
         Switch swHighFat = (Switch) findViewById(R.id.swHighFat);
@@ -59,12 +60,13 @@ public class AddMealActivity extends AppCompatActivity {
                     String carbType = editCarbType.getSelectedItem().toString();
                     float carbCount = Float.valueOf(editCarbCount.getText().toString());
                     float glucoseLevel = Float.valueOf(editGlucoseLevel.getText().toString());
+                    float insulin = Float.valueOf(editInsulin.getText().toString());
                     boolean highFat = swHighFat.isChecked();
                     boolean exerciseDay = swExerciseDay.isChecked();
 
                     //insert meal into database
                     InsertAsyncTask insertAsyncTask = new InsertAsyncTask();
-                    Meal meal = new Meal(carbType, carbCount, glucoseLevel, highFat, exerciseDay);
+                    Meal meal = new Meal(carbType, carbCount, glucoseLevel, highFat, exerciseDay, insulin);
                     insertAsyncTask.execute(meal);
                     //logs and user feedback
                     Log.d("DATABASE", "Added new meal to db");
