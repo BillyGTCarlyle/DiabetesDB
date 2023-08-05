@@ -19,6 +19,7 @@ public class UpdateMealActivity extends AppCompatActivity {
 
         //set up UI elements
         EditText editGlucoseLevel1h = (EditText) findViewById(R.id.editGlucoseLevel1h);
+        EditText editNotes = (EditText) findViewById(R.id.editNotes);
         Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,8 +30,11 @@ public class UpdateMealActivity extends AppCompatActivity {
                 }else{
                     //Grab value from UI and update the database.
                     float glucoseLevel1h = Float.valueOf(editGlucoseLevel1h.getText().toString());
-                    UpdateAsyncTask updateAsyncTask = new UpdateAsyncTask();
-                    updateAsyncTask.execute(glucoseLevel1h);
+                    String notes = editNotes.getText().toString();
+                    UpdateGlucoseAsyncTask updateGlucoseAsyncTask = new UpdateGlucoseAsyncTask();
+                    UpdateNotesAsyncTask updateNotesAsyncTask = new UpdateNotesAsyncTask();
+                    updateGlucoseAsyncTask.execute(glucoseLevel1h);
+                    updateNotesAsyncTask.execute(notes);
                     Log.d("DATABASE","Updated latest meal using glucose level:"+glucoseLevel1h);
                     showToast("Meal updated.");
                     finish();
@@ -39,12 +43,22 @@ public class UpdateMealActivity extends AppCompatActivity {
         });
     }
 
-    class UpdateAsyncTask extends AsyncTask<Float, Void, Void> {
+    class UpdateGlucoseAsyncTask extends AsyncTask<Float, Void, Void> {
 
         @Override
         protected Void doInBackground(Float... floats) {
             Meal lastMealFromDB = MealDatabase.getDatabase(getApplicationContext()).mealDao().getLastMeal();
             lastMealFromDB.setGlucoseLevel1h(floats[0]);
+            MealDatabase.getDatabase(getApplicationContext()).mealDao().update(lastMealFromDB);
+            return null;
+        }
+    }
+
+    class UpdateNotesAsyncTask extends AsyncTask<String, Void, Void>{
+        @Override
+        protected Void doInBackground(String... strings){
+            Meal lastMealFromDB = MealDatabase.getDatabase(getApplicationContext()).mealDao().getLastMeal();
+            lastMealFromDB.setNotes(strings[0]);
             MealDatabase.getDatabase(getApplicationContext()).mealDao().update(lastMealFromDB);
             return null;
         }

@@ -100,4 +100,11 @@ public class Meal {
     public void setExerciseDay(boolean exerciseDay){
         this.exerciseDay = exerciseDay;
     }
+
+    public String getNotes(){
+        return notes;
+    }
+    public void setNotes(String notes){
+        this.notes = notes;
+    }
 }
