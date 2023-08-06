@@ -77,9 +77,15 @@ public class AddMealActivity extends AppCompatActivity {
                     Intent intent = new Intent(AddMealActivity.this,NotifBroadcastReceiver.class);
                     alarmIntent = PendingIntent.getBroadcast(AddMealActivity.this.getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-                    alarmManager.set(AlarmManager.RTC_WAKEUP,
-                            System.currentTimeMillis() +
-                                    (30 * 1000), alarmIntent);
+                    if(BuildConfig.DEBUG) {
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                System.currentTimeMillis() +
+                                        (30 * 1000), alarmIntent);
+                    }else {
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                System.currentTimeMillis() +
+                                        (90 * 60 * 1000), alarmIntent);
+                    }
                     finish();
                 }
             }

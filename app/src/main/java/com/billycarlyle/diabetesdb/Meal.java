@@ -21,11 +21,9 @@ public class Meal {
     float glucoseLevel1h;
     boolean withFat;
     boolean exerciseDay;
-
     float insulin;
     @TypeConverters({TimestampConverter.class})
     LocalDateTime dateTime;
-
     String notes;
 
     public Meal(String carbType, float carbCount, float glucoseLevelStart, boolean withFat, boolean exerciseDay, float insulin){
@@ -106,5 +104,12 @@ public class Meal {
     }
     public void setNotes(String notes){
         this.notes = notes;
+    }
+
+    public float getInsulin(){
+        return insulin;
+    }
+    public void setInsulin(float insulin){
+        this.insulin = insulin;
     }
 }
